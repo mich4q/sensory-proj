@@ -20,6 +20,7 @@ class BMEData{
 
     void getBMEdata();
     String getReadingTimestamp();
+    void checkConditions();
 };
 extern BMEData bmeData;
 #endif

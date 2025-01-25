@@ -19,11 +19,12 @@ unsigned long lastmillis = 0;
 void loop() {
     unsigned long currentmillis = millis();
     if(currentmillis - lastmillis >= 5000){
-        bmeData.getBMEdata();
+        bmeData.checkConditions();
+        
         dataHandler.saveToFile();
         size_t freeMemory = ESP.getFreeHeap();
         // Serial.print("Dostępna pamięć: ");
-        
+
         Serial.println(freeMemory);
         // Serial.println(" bajtow");
         lastmillis = currentmillis;

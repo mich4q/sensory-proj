@@ -37,3 +37,12 @@ void BMEData::getBMEdata(){
     // return data;
 }
 
+void BMEData::checkConditions(){
+    getBMEdata();
+    if(dataHandler.data["soil_humidity"] < dataHandler.thresholds["soil_humidity"]){
+        Serial.println("pump on");
+    }
+    if(dataHandler.data["co2"] > dataHandler.thresholds["co2"]){
+        Serial.println("fans on");
+    }
+}

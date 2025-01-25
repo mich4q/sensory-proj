@@ -13,6 +13,8 @@ class DataHandler{
         data["soil_humidity"] = 0;
         data["co2"] = 0;
         data["timestamp"] = "";
+        data["pump"] = "false";
+        data["fans"] = "false";
 
         thresholds["soil_humidity"] = 0;
         thresholds["co2"] = 0;

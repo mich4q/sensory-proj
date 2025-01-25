@@ -14,6 +14,9 @@ $(function () {
     $('#save_network').click(function () {
         saveNetwork();
     });
+    $('#send-data-file').click(function () {
+        getDataFile();
+    });
 
     // Obsługa ręcznego odświeżania danych czujników
     $('#getSensorData').click(function () {
@@ -68,6 +71,27 @@ function fanOn() {
         },
         error: function (xhr, status, error) {
             console.error('Error turning on fan:', error);
+        }
+    });
+}
+
+function getDataFile() {
+    $.ajax({
+        url: '/getDataFile',  // Endpoint na serwerze, który zwraca plik
+        method: 'GET',
+        success: function (response, status, xhr) {
+            // Sprawdź status odpowiedzi
+            if (xhr.status === 200) {
+                console.log("Plik został poprawnie przesłany.");
+                // alert("Plik został poprawnie przesłany.");
+            } else {
+                console.error("Błąd podczas przesyłania pliku. Status:", xhr.status);
+                // alert("Błąd podczas przesyłania pliku.");
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error('Błąd podczas komunikacji z serwerem:', error);
+            // alert("Błąd podczas komunikacji z serwerem.");
         }
     });
 }

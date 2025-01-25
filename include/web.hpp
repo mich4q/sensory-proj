@@ -23,6 +23,7 @@ public:
 
     void pumpControl(AsyncWebServerRequest *request);
     void fanControl(AsyncWebServerRequest *request);
+    void sendDataFile();
     void fanOn();
     void fanOff();
     void pumpOn();

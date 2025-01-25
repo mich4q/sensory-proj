@@ -12,12 +12,10 @@ void Web::setup() {
         server.on("/", HTTP_ANY, [this](AsyncWebServerRequest *request) {
             request->send(LittleFS, "/index.html", "text/html");
         });
-
         // Obsługa zapisu ustawień sieciowych
         server.on("/savenetwork", HTTP_GET, [this](AsyncWebServerRequest *request) { 
             saveNetwork(request); 
         });
-
         server.on("/getData", HTTP_GET, [this](AsyncWebServerRequest *request) {
             getData(request);
         });
@@ -38,6 +36,11 @@ void Web::setup() {
         server.onNotFound([](AsyncWebServerRequest *request) { 
             request->send(404); 
         });
+
+        server.on("/getDataFile", HTTP_GET, [this](AsyncWebServerRequest *request) {
+            sendDataFile();
+            request->send(200, "text/plain", "dataFile sent"); // Wysyła odpowiedź jako JSON
+        });
         // Obsługa statycznych plików (JavaScript, CSS, obrazy)
         server.serveStatic("/js/", LittleFS, "/js/");
         server.serveStatic("/css/", LittleFS, "/css/");
@@ -49,7 +52,9 @@ void Web::setup() {
         Serial.println("Błąd ładowania plików statycznych.");
     }
 }
-
+void Web::sendDataFile() {
+    server.serveStatic("/data.json", LittleFS, "/data.json");
+}
 bool Web::loadStaticFiles() {
     // Sprawdzanie, czy wszystkie wymagane pliki istnieją w systemie plików
     if (!LittleFS.exists("/index.html") || !LittleFS.exists("/js/main.js") || !LittleFS.exists("/css/main.css")) {
@@ -86,7 +91,7 @@ bool Web::loadStaticFiles() {
 void Web::getData(AsyncWebServerRequest *request){
     String jsonResponse;
     serializeJson(dataHandler.data,jsonResponse);
-    Serial.println(jsonResponse);
+    // Serial.println(jsonResponse);
     request->send(200, "application/json", jsonResponse); // Wysyła odpowiedź jako JSON
 }
 
@@ -122,6 +127,7 @@ void Web::saveNetwork(AsyncWebServerRequest *request) {
         request->send(400, "text/plain", "Missing parameters");
     }
 }
+
 void Web::getThresholds(AsyncWebServerRequest *request){
     String humidity = request->getParam("humidity")->value();
     String co2 = request->getParam("co2")->value();

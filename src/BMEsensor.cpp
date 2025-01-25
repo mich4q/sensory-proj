@@ -20,15 +20,20 @@ String BMEData::getReadingTimestamp() {
     return String(timeStampBuffer); // Zwrócenie jako String
 }
 
-SensorData BMEData::getBMEdata(){
-    SensorData data;
-
-    data.temperature = 0;
-    data.humidity = 0 ;
-    data.timestamp = getReadingTimestamp();
-    data.co2 = 0;
-    data.soil_humidity = 0;
+void BMEData::getBMEdata(){
+    // SensorData data;
+    dataHandler.data["temperature"] = 0;//bme.readTemperature();
+    dataHandler.data["humidity"] = 0;//bme.readHumidity();
+    dataHandler.data["timestamp"] = getReadingTimestamp();
+    dataHandler.data["co2"] = 0;//co2Sensor.readCO2();
+    dataHandler.data["soil_humidity"] = 0;//soilSensor.readSoilHumidity();
     
-    return data;
+    // data.temperature = 0;//bme.readTemperature();
+    // data.humidity = 0 ;//bme.readHumidity();
+    // data.timestamp = getReadingTimestamp();
+    // data.co2 = 0;//co2Sensor.readCO2();
+    // data.soil_humidity = 0;//soilSensor.readSoilHumidity();
+
+    // return data;
 }
 

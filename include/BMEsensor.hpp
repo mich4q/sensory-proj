@@ -18,7 +18,7 @@ class BMEData{
     const long  gmtOffset_sec = 3600;
     const int   daylightOffset_sec = 3600;
 
-    SensorData getBMEdata();
+    void getBMEdata();
     String getReadingTimestamp();
 };
 extern BMEData bmeData;

@@ -11,17 +11,21 @@ void setup() {
     initFilesystem();
     initWiFi();
     web.setup();
+
+    dataHandler.createFile();
 }
 unsigned long lastmillis = 0;
 
 void loop() {
     unsigned long currentmillis = millis();
     if(currentmillis - lastmillis >= 5000){
+        bmeData.getBMEdata();
+        dataHandler.saveToFile();
         size_t freeMemory = ESP.getFreeHeap();
-
-        Serial.print("Dostępna pamięć: ");
-        Serial.print(freeMemory);
-        Serial.println(" bajtów");
+        // Serial.print("Dostępna pamięć: ");
+        
+        Serial.println(freeMemory);
+        // Serial.println(" bajtow");
         lastmillis = currentmillis;
     }    
 }
@@ -36,6 +40,7 @@ void initFilesystem(){
         return;
     }
     Serial.println("Filesystem mounted successfully.");
+    // Sprawdzamy, czy plik już istnieje
 }
 
 void hardwareInit(){
